@@ -1,0 +1,33 @@
+<ion-content>
+  <h3 class="title" *ngIf="items">{{items.length}} {{items.length > 1 ? 'Itens adicionados' : 'Item adicionado'}}</h3>
+
+  <!-- CART ITEMS -->
+  <ion-list lines="none">
+    <ion-item-sliding *ngFor="let item of items">
+      <ion-item>
+        <app-cart-item [item]="item" (increase)="onIncrease(item)" (decrease)="onDecrease(item)"></app-cart-item>
+      </ion-item>
+      <ion-item-options side='end'>
+        <ion-item-option (click)="removeFromCart(item)">
+          <ion-icon name='trash-outline' size='large' color='danger'></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <!-- EMPTY CART -->
+  <div class="empty-cart" *ngIf="!items">
+    <ion-icon name="d-cart"></ion-icon>
+    <p>Your cart is empty</p>
+  </div>
+
+  <!-- CHECKOUT BUTTON -->
+  <app-button *ngIf="items?.length">
+    Total: <span><sup>R$</sup>{{ price ? price : amount | number:'1.2' }}</span>
+  </app-button>
+ <div class="finish-order">
+   <app-button *ngIf="items?.length" (click)="finish()">
+     {{'Finalizar Pedido' | uppercase}}
+   </app-button>
+ </div>
+</ion-content>

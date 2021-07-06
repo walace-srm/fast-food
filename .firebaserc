@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "fast-food-38e89": {
+      "hosting": {
+        "app": [
+          "fast-food-38e89"
+        ]
+      }
+    }
+  }
+}

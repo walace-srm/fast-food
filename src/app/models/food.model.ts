@@ -5,4 +5,5 @@ export interface Food {
   unitPrice?: number;
   image?: string;
   description?: string;
+  observation?: string;
 }

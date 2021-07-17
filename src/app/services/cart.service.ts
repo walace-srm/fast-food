@@ -1,42 +1,40 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { CartItem } from '../models/cart-item.model';
-import { map } from 'rxjs/operators';
-import { AngularFireDatabase } from '@angular/fire/database';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
+import {CartItem} from '../models/cart-item.model';
+import {map} from 'rxjs/operators';
+import {AngularFireDatabase} from '@angular/fire/database';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  private items$ = new BehaviorSubject<CartItem[]>([
-    // {
-    //   id: 1,
-    //   name: 'Sea Food',
-    //   price: 12,
-    //   image: 'assets/images/foods/seafood-dishes.png',
-    //   quantity: 1,
-    // },
-  ]);
+  private uid: string;
+  private items$ = new BehaviorSubject<CartItem[]>([]);
 
   constructor(
     private db: AngularFireDatabase
   ) {
+    this.fetchUid();
+  }
+
+  fetchUid() {
+    const userId = JSON.parse(localStorage.getItem('user'));
+    this.uid = userId?.uid || null;
   }
 
   getCart() {
-    return this.db.list('item')
+    return this.db.list('item',ref => ref.orderByChild('uid').equalTo(this.uid))
       .snapshotChanges()
       .pipe(map(changes =>
         // @ts-ignore
-         changes.map(c => ({key: c.payload.key, ...c.payload.val()}))
+        changes.map(c => ({key: c.payload.key, ...c.payload.val()}))
       ));
-    //return this.items$.asObservable();
   }
 
   addToCart(newItem: CartItem) {
     this.db.list('item').push({
       ...newItem,
-      //uid: this.uid
+      uid: this.uid
     })
       .then(() => {
       });
@@ -54,10 +52,21 @@ export class CartService {
     this.items$.next(items);
   }
 
-  sendAdmin(newItem) {
+  sendAdmin(newItem, price) {
     this.db.list('admin').push({
       ...newItem,
-      //uid: this.uid
+      price,
     });
   }
+
+  // removeRange(firebaseArray, start, end) {
+  //   const keys = {};
+  //   if (end === undefined) {
+  //     end = firebaseArray.length;
+  //   }
+  //   for (var i = start; i < end; ++i) {
+  //     keys[firebaseArray.$keyAt(i)] = null;
+  //   }
+  //   return firebaseArray.$ref().update(keys);
+  // }
 }

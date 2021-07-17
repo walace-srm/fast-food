@@ -13,7 +13,7 @@ ion-content {
       font-size: 2rem;
       font-weight: 600;
       color: #515151;
-      margin: 0;
+      margin: 20px;
     }
 
     .avatar {
@@ -52,4 +52,8 @@ ion-content {
     grid-template-columns: 1fr 1fr;
     grid-gap: 1rem;
   }
+}
+
+.background-card {
+  background-color: #6b45bc;
 }

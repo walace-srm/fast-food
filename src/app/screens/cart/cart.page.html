@@ -1,8 +1,8 @@
 <ion-content>
-  <h3 class="title" *ngIf="items">{{items.length}} {{items.length > 1 ? 'Itens adicionados' : 'Item adicionado'}}</h3>
+  <h3 class="title" *ngIf="items && !finished">{{items?.length}} {{items?.length > 1 ? 'Itens adicionados' : 'Item adicionado'}}</h3>
 
   <!-- CART ITEMS -->
-  <ion-list lines="none">
+  <ion-list lines="none" *ngIf="!finished">
     <ion-item-sliding *ngFor="let item of items">
       <ion-item>
         <app-cart-item [item]="item" (increase)="onIncrease(item)" (decrease)="onDecrease(item)"></app-cart-item>
@@ -18,14 +18,21 @@
   <!-- EMPTY CART -->
   <div class="empty-cart" *ngIf="!items">
     <ion-icon name="d-cart"></ion-icon>
-    <p>Your cart is empty</p>
+    <P>Seu carrinho está vazio</P>
+  </div>
+
+  <!-- ORDER FINISHED -->
+  <div class="empty-cart" *ngIf="this.finished">
+    <ion-icon name="checkmark-done-outline"></ion-icon>
+    <p>Pedido realizado!</p>
+    <p>Irmãs Lanches agradece a sua preferência</p>
   </div>
 
   <!-- CHECKOUT BUTTON -->
-  <app-button *ngIf="items?.length">
+  <app-button *ngIf="items?.length && !finished">
     Total: <span><sup>R$</sup>{{ price ? price : amount | number:'1.2' }}</span>
   </app-button>
- <div class="finish-order">
+ <div class="finish-order" *ngIf="!finished">
    <app-button *ngIf="items?.length" (click)="finish()">
      {{'Finalizar Pedido' | uppercase}}
    </app-button>

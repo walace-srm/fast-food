@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="">{{ 'Irmâs Lanches' | uppercase }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="ion-padding-top">
+  <div class="login"[formGroup]="loginForm">
+    <h3>Bem vindo(a)!</h3>
+    <div>
+      <input type="text" class="formControl" placeholder="Entre com seu e-mail" formControlName="email" required>
+    </div>
+
+    <div>
+      <input type="password" class="formControl" placeholder="Insira sua senha" formControlName="password" required>
+    </div>
+
+    <div class="ion-padding-top">
+      <input type="button" class="btn-primary" value="Entrar" (click)="onSubmit(loginForm)">
+    </div><br>
+    <!--    TODO: Será implementado depois-->
+    <!--    <b>Ou</b>-->
+    <!--    <div class="formGroup ion-padding-top">-->
+    <!--      <button type="button" class="btn-google" (click)="onSubmitGoogle()">-->
+    <!--        <ion-icon name="logo-google"></ion-icon>-->
+    <!--        <span class="position">Entre com a conta Google</span>-->
+    <!--      </button>-->
+    <!--    </div>-->
+
+
+    <div class="ion-padding-top">
+      <a routerLink="/forgot-password">Esqueceu sua senha?</a>
+    </div>
+
+    <div class="sign-up">
+      <span>Não tem conta? <a routerLink="/sign-up">Inscrever-se</a></span>
+    </div>
+  </div>
+</ion-content>

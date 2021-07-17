@@ -11,9 +11,10 @@ import {CartService} from 'src/app/services/cart.service';
 export class CartPage implements OnInit {
   items: CartItem[];
   amount: string;
-  totalAmount = 0;
+  totalAmount: string;
   price: string;
-  teste: [];
+  public finished: boolean;
+  public itemKey: string;
 
   constructor(
     private cartService: CartService,
@@ -22,13 +23,17 @@ export class CartPage implements OnInit {
   }
 
   ngOnInit() {
-   this.fetchItem();
+    this.fetchItem();
   }
 
   fetchItem() {
     this.cartService.getCart().subscribe((data: CartItem[]) => {
       this.items = data;
       this.total();
+      data.map(item => {
+        this.itemKey = item.key;
+      });
+
     });
   }
 
@@ -90,6 +95,8 @@ export class CartPage implements OnInit {
   }
 
   finish() {
-   this.cartService.sendAdmin(this.items);
+    this.finished = true;
+    this.cartService.sendAdmin(this.items, this.price);
+    this.cartService.removeItem(this.itemKey);
   }
 }

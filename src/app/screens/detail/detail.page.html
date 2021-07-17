@@ -35,6 +35,11 @@
       <b>{{food.description}}</b>
     </div>
 
-    <app-button (click)="addItemToCart()">Adicionar ao carrinho</app-button>
+    <ion-item class="text-area">
+      <ion-label position="floating">{{'Observações:' | uppercase}}</ion-label>
+      <ion-textarea [(ngModel)]="food.observation"></ion-textarea>
+    </ion-item>
+
+    <app-button (click)="addItemToCart()">{{'Adicionar ao carrinho' | uppercase}}</app-button>
   </div>
 </ion-content>

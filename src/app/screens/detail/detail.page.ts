@@ -41,12 +41,12 @@ export class DetailPage implements OnInit {
       unitPrice: this.food.unitPrice,
       image: this.food.image,
       quantity: 1,
+      observation: this.food.observation = ''
     };
 
     this.cartService.addToCart(cartitem);
     this.presentToast();
     this.router.navigate(['/home/listing']);
-    //this.getFoods();
   }
 
   async presentToast() {
